@@ -1,0 +1,159 @@
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
+
+
+public class GUI2 {
+	public static String[] RegFileArr = new String[4];
+	public static Display display = new Display ();
+	public static Shell shell = new Shell (display);
+	public static Table Register_File = new Table(shell, SWT.NONE);
+	public static Table RAM = new Table(shell, SWT.NONE);
+	public static String[] RamArr = new String[16];
+	public static boolean GO=false;
+	public static void main (String [] args) {
+		RegFileArr[0]="0000";
+		RegFileArr[1]="0000";
+		RegFileArr[2]="0000";
+		RegFileArr[3]="0000";
+		
+		final Color white = display.getSystemColor(SWT.COLOR_WHITE); 
+		final Color gray = display.getSystemColor(SWT.COLOR_GRAY);
+		final Color black = display.getSystemColor(SWT.COLOR_BLACK); 
+		final Color blue = display.getSystemColor(SWT.COLOR_BLUE);
+		Font font = new Font(display, "Arial", 15, SWT.NONE );
+		final Image welbg = new Image(display, "bg.png");
+		
+		shell.setBackgroundImage(welbg);
+		shell.setSize(1360	, 768);
+		shell.setMaximized(true);
+		shell.setText("CS 231 DATAPATH_SIMULATOR");
+		
+		Menu menu = new Menu(shell, SWT.BAR);
+		shell.setMenuBar(menu);
+		MenuItem file = new MenuItem(menu, SWT.CASCADE);
+		file.setText("File");
+		Menu filemenu = new Menu(shell, SWT.DROP_DOWN);
+		file.setMenu(filemenu);
+		
+		shell.setBackground(white);
+		
+		
+		
+		Button button1 = new Button(shell,SWT.PUSH|SWT.NONE);
+		button1.setBackground(gray);
+		button1.setBounds(0, 0, 75, 75);
+		button1.addSelectionListener(new SelectionAdapter() { 
+		    public void widgetSelected(SelectionEvent e) { 
+		    	GO = true;
+		    }    
+		 });
+		RAM.setBounds(1024, 308, 210,150	);
+		RAM.setLinesVisible(false);
+		TableColumn ramC1 = new TableColumn(RAM, SWT.CENTER);
+		TableColumn ramC2 = new TableColumn(RAM, SWT.CENTER);
+		TableColumn ramC3 = new TableColumn(RAM, SWT.CENTER);
+		TableColumn ramC4 = new TableColumn(RAM, SWT.CENTER);
+		ramC1.setWidth(50);
+		ramC2.setWidth(50);
+		ramC3.setWidth(50);
+		ramC4.setWidth(50);
+		
+		TableItem ramI1 = new TableItem(RAM, SWT.NONE);
+		TableItem ramB1 = new TableItem(RAM, SWT.NONE);
+		TableItem ramI2 = new TableItem(RAM, SWT.NONE);
+		TableItem ramB2 = new TableItem(RAM, SWT.NONE);
+		TableItem ramI3 = new TableItem(RAM, SWT.NONE);
+		TableItem ramB3 = new TableItem(RAM, SWT.NONE);
+		TableItem ramI4 = new TableItem(RAM, SWT.NONE);
+		
+		ramB1.setText("");
+		ramB2.setText("");
+		ramB3.setText("");
+		
+		Register_File.setLinesVisible(false);
+		TableColumn regC1 = new TableColumn(Register_File, SWT.LEFT);
+		TableColumn regC2 = new TableColumn(Register_File, SWT.RIGHT);
+		regC1.setWidth(80);
+		regC2.setWidth(80);
+		
+		TableItem regI1 = new TableItem(Register_File, SWT.NONE);
+		regI1.setFont(font);
+		TableItem regB = new TableItem(Register_File, SWT.NONE);
+		regB.setText(new String[]{"",""});
+		TableItem regI2 = new TableItem(Register_File, SWT.NONE);
+		regI2.setFont(font);
+				
+		Register_File.setBounds(740, 90, 164, 70);
+		
+		Text regAA = new Text(shell, SWT.BORDER);
+		Text regBA = new Text(shell, SWT.BORDER);
+		Text regDA = new Text(shell, SWT.BORDER);
+		Text regDD = new Text(shell, SWT.BORDER);
+		Text regAD = new Text (shell, SWT.BORDER);
+		Text regBD = new Text(shell, SWT.BORDER);
+		Text regWR = new Text(shell, SWT.BORDER);
+		
+		regAA.setTextLimit(2);
+		regBA.setTextLimit(2);
+		regDA.setTextLimit(2);
+		regDD.setTextLimit(4);
+		regAD.setTextLimit(4);
+		regBD.setTextLimit(4);
+		regWR.setTextLimit(1);
+		
+		regAA.setEditable(true);
+		regBA.setEditable(true);
+		regDA.setEditable(true);
+		regDD.setEditable(true);
+		regBD.setEditable(false);
+		regAD.setEditable(false);
+		regWR.setEditable(true);
+		
+		regAA.setBounds(670, 150, 27, 20);
+		regBA.setBounds(950, 150, 27, 20);
+		regDA.setBounds(670, 105, 27, 20);
+		regWR.setBounds(670, 75, 27, 20);
+		regAD.setBounds(743, 182, 50, 20);
+		regBD.setBounds(853, 182, 50, 20);
+		regDD.setBounds(785, 50, 50, 20);
+		
+		RegisterFile RegFile = new RegisterFile();
+		
+		shell.open();
+		while(!shell.isDisposed()){
+			if(GO){
+			/**RegFile.A_add = Converter.toArr(regAA.getText());
+			RegFile.B_add = Converter.toArr(regBA.getText());
+			RegFile.D_add = Converter.toArr(regDA.getText());
+			RegFile.WR = Converter.toArr(regAA.getText());
+			String[] n = RegFile.Opp();
+			regAD.setText(n[0]);
+			regBD.setText(n[1]);*/
+			if(regWR.getText().equals("1"))
+			RegFileArr[Converter.ToInt(Converter.toArr(regDA.getText()))]=regDD.getText();
+			regAD.setText(RegFileArr[Converter.ToInt(Converter.toArr(regAA.getText()))]);
+			regBD.setText(RegFileArr[Converter.ToInt(Converter.toArr(regBA.getText()))]);
+			GO=false;
+			}
+			regI1.setText(new String[]{RegFileArr[0], RegFileArr[2]});
+			regI2.setText(new String[]{RegFileArr[1], RegFileArr[3]});
+			
+		if(!display.readAndDispatch())
+		display.sleep();
+		}
+		display.dispose();
+	}
+}
